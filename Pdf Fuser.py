@@ -8,15 +8,16 @@ def inicio():
                                                     or n.endswith('.png') 
                                                     or n.endswith('.jpeg')]
                                                     
-        #archivo = open(carpeta + '\\' + os.path.basename(carpeta) + '.docx', 'w')
-        #archivo.close()
         os.chdir(carpeta)
         doc = docx.Document()
-        doc.add_paragraph('hola')
-        doc.add_page_break()
-        doc.add_picture(archivos[0])
+        i = 0
+        for imagen in archivos:
+            doc.add_picture(imagen)
+            doc.add_page_break()
+            i += 1
+            print('Completado ' + str(int(100 * (i / len(archivos)))) + '% \r',end='',flush=True)
+            
         doc.save(os.path.basename(carpeta) + '.docx')
-        print(archivos)
         
     else:
         print('Carpeta no existe')
