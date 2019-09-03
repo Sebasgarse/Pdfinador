@@ -1,4 +1,5 @@
 import os, PyPDF2, docx
+from PIL import Image
 
 def inicio():
     print("Escriba la direccion de la carpeta")
@@ -12,8 +13,8 @@ def inicio():
         doc = docx.Document()
         i = 0
         for imagen in archivos:
-            doc.add_picture(imagen)
-            doc.add_page_break()
+            width, height = Image.open(imagen).size
+            doc.add_picture(imagen, width=docx.shared.Inches(8.5), height=docx.shared.Inches(11))
             i += 1
             print('Completado ' + str(int(100 * (i / len(archivos)))) + '% \r',end='',flush=True)
             
