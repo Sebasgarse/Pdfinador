@@ -16,11 +16,11 @@ def many():
     print("Escriba la direccion de la carpeta:")
     directory = input()
     if os.path.exists(directory) and os.path.isdir(directory):
-        directorys = [n for n in os.listdir(directory) if os.path.isdir(join(directory, n))]
+        directories = [n for n in os.listdir(directory) if os.path.isdir(join(directory, n))]
     else:
         print('Carpeta no existe') 
         return many()
-    for dir in [join(directory, n) for n in directorys if n + ".pdf" not in os.listdir(directory)]:
+    for dir in [join(directory, n) for n in directories if n + ".pdf" not in os.listdir(directory)]:
         pdfing(dir, directory)
         
 def pdfing(dir, directory = None):
