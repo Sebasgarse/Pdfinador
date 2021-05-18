@@ -30,6 +30,10 @@ class PdfFiles:
 
         mkdir(self.pdf_dir)
 
+    def remove_pdf_directory(self):
+        if exists(self.pdf_dir):
+            rmtree(self.pdf_dir)
+
     def sort_by_number(self):
         self.files = self.sort.by_number(self.files)
 

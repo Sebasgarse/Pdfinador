@@ -16,7 +16,6 @@ class PdfCreatorManager:
             self.create_pdf()
 
     def create_pdf(self):
-        print(self.set_directory.has_no_files())
         if self.set_directory.has_no_files():
             return
 
@@ -76,6 +75,7 @@ class PdfCreatorManager:
     def close_files(self):
         for file in self.files:
             file.close()
+        self.set_directory.files.remove_pdf_directory()
 
     def add_error(self, error):
         self.errors.append(error)
