@@ -1,15 +1,17 @@
 from .Directory import Directory
 from .PdfCreator import PdfCreator
 from PyPDF2 import PdfFileWriter
+from tqdm import tqdm
+
 
 class PdfCreatorManager:
     def __init__(self):
         self.directories = []
 
-    def add_directory(self, dir, directory = None):
+    def add_directory(self, dir, directory=None):
         directory = Directory(dir, directory)
         self.directories.append(directory)
-    
+
     def execute(self):
         for directory in self.directories:
             self.set_directory = directory
@@ -34,24 +36,22 @@ class PdfCreatorManager:
         self.writer = PdfFileWriter()
 
     def process_images(self):
-        for image_file in self.set_directory.files.get():
+        for image_file in tqdm(self.set_directory.files.get()):
             pages = self.get_pdf_pages(image_file)
             self.set_pages_to_writer(pages)
             self.archive_count += 1
-            self.print_complete_text()
 
     def get_pdf_pages(self, image_file):
-        pdfCreator = PdfCreator( self, image_file, self.set_directory )
+        pdfCreator = PdfCreator(self, image_file, self.set_directory)
         return pdfCreator.get_pages()
 
     def set_pages_to_writer(self, pages):
         for page in pages:
             self.writer.addPage(page)
 
-
     def print_complete_text(self):
         archive_max_count = len(self.set_directory.files.get())
-        percent = 100 * ( self.archive_count / archive_max_count )
+        percent = 100 * (self.archive_count / archive_max_count)
         percent = int(percent)
         complete_text = '\rCompletado ' + str(percent) + '%'
         print(complete_text, end='', flush=True)
@@ -67,8 +67,8 @@ class PdfCreatorManager:
         else:
             print('\nSe presentaron los siguientes errores:')
             [
-                print(error) 
-                for error 
+                print(error)
+                for error
                 in self.errors
             ]
 
